@@ -5,6 +5,7 @@ outputs/
 *venv*
 .DS_Store
 *.swp
+app/jira.yml
 *.iml
 *.log
 *.pyc

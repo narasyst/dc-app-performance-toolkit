@@ -63,6 +63,30 @@ Refer to `app/selenium_ui/jira/modules.py` for examples.
 # def test_1_selenium_custom_action(jira_webdriver, jira_datasets, jira_screen_shots):
 #     extension_ui.app_specific_action(jira_webdriver, jira_datasets)
 
+def test_1_selenium_create_dashboard(jira_webdriver, jira_datasets, jira_screen_shots):
+    extension_ui.app_create_dashboard(jira_webdriver, jira_datasets)
+
+
+def test_1_selenium_add_performance_objectives_gadget(jira_webdriver, jira_datasets, jira_screen_shots):
+    extension_ui.app_add_gadget(jira_webdriver, jira_datasets, 'performance-objectives', True, False, False)
+
+def test_1_selenium_add_performance_trend_gadget(jira_webdriver, jira_datasets, jira_screen_shots):
+    extension_ui.app_add_gadget(jira_webdriver, jira_datasets, 'performance-trend', False, False, False)
+
+def test_1_selenium_add_circular_chart_gadget(jira_webdriver, jira_datasets, jira_screen_shots):
+    extension_ui.app_add_gadget(jira_webdriver, jira_datasets, 'circle', False, False, False)
+
+def test_1_selenium_add_multi_metric_combined_gadget(jira_webdriver, jira_datasets, jira_screen_shots):
+    extension_ui.app_add_gadget(jira_webdriver, jira_datasets, 'multi-metric-bar', False, True, False)
+
+def test_1_selenium_add_multi_metric_trend_gadget(jira_webdriver, jira_datasets, jira_screen_shots):
+    extension_ui.app_add_gadget(jira_webdriver, jira_datasets, 'multi-metric-trend', False, True, False)    
+
+def test_1_selenium_add_change_history_gadget(jira_webdriver, jira_datasets, jira_screen_shots):
+    extension_ui.app_add_gadget(jira_webdriver, jira_datasets, 'change-history', False, False, True)
+
+def test_1_selenium_delete_dashboard(jira_webdriver, jira_datasets, jira_screen_shots):
+    extension_ui.app_delete_dashboard(jira_webdriver, jira_datasets)
 
 # this action should be the last one
 def test_2_selenium_z_log_out(jira_webdriver, jira_datasets, jira_screen_shots):
