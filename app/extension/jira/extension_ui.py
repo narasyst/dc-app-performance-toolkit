@@ -9,8 +9,6 @@ from selenium_ui.conftest import print_timing
 from util.conf import JIRA_SETTINGS
 
 
-
-
 def app_specific_action(webdriver, datasets):
     page = BasePage(webdriver)
     if datasets['custom_issues']:
@@ -41,6 +39,13 @@ def app_create_dashboard(jira_webdriver, jira_datasets):
         page.get_element((By.ID,'edit-entity-submit')).click()
     measure()
 
+def load_more_items(jira_webdriver):
+    page.wait_until_visible((By.ID,'message-panel'))
+    try:
+        page.wait_until_visible((By.ID,'load-more-directory-items')).click()
+    except:
+        print('Already loaded')
+        
 
 def app_add_gadget(jira_webdriver, jira_datasets, gadgetId, isLoadMore, isMulti, isHistory):
     page = BasePage(jira_webdriver)
@@ -56,10 +61,14 @@ def app_add_gadget(jira_webdriver, jira_datasets, gadgetId, isLoadMore, isMulti,
         @print_timing(f'{testName}: add gadget')
         def sub_measure():
             page.get_element((By.ID,'add-gadget')).click()
-            if isLoadMore:
+            page.wait_until_visible((By.ID,'list-panel'))
+            
+            try:
+                page.get_element((By.XPATH, gadgetPath)).click()
+            except:
                 page.wait_until_visible((By.ID,'load-more-directory-items')).click()
+                page.wait_until_visible((By.XPATH, gadgetPath)).click()
 
-            page.wait_until_visible((By.XPATH, gadgetPath)).click()
             page.get_element((By.CSS_SELECTOR, '.aui-dialog2-header  button.aui-close-button')).click()
         sub_measure()
 
@@ -107,7 +116,7 @@ def app_add_gadget(jira_webdriver, jira_datasets, gadgetId, isLoadMore, isMulti,
         @print_timing(f'{testName}: delete gadget')
         def sub_measure():
             page.driver.switch_to.parent_frame()
-            page.get_element((By.CSS_SELECTOR, '.gadget-menu button')).click()
+            page.wait_until_visible((By.CSS_SELECTOR, '.gadget-menu button')).click()
             page.wait_until_visible((By.CSS_SELECTOR, '.gadget-menu .dropdown-item .delete')).click()
             page.driver.switch_to.alert.accept()
             page.wait_until_invisible((By.CSS_SELECTOR, '.gadget-container'))
