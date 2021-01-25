@@ -59,14 +59,14 @@ def app_add_gadget(jira_webdriver, jira_datasets, gadgetId, isLoadMore, isMulti,
             if isLoadMore:
                 page.wait_until_visible((By.ID,'load-more-directory-items')).click()
 
-            page.get_element((By.XPATH, gadgetPath)).click()
+            page.wait_until_visible((By.XPATH, gadgetPath)).click()
             page.get_element((By.CSS_SELECTOR, '.aui-dialog2-header  button.aui-close-button')).click()
         sub_measure()
 
         @print_timing(f'{testName}: init')
         def sub_measure():
             page.wait_until_invisible((By.CSS_SELECTOR, '.aui-dialog2-header'))
-            page.driver.switch_to.frame(page.get_element((By.CSS_SELECTOR,'.dashboard-item-content iframe')))
+            page.driver.switch_to.frame(page.wait_until_visible((By.CSS_SELECTOR,'.dashboard-item-content iframe')))
         sub_measure()
 
         @print_timing(f'{testName}: configure')
